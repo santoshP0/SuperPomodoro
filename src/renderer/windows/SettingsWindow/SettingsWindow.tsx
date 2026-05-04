@@ -27,7 +27,7 @@ export function SettingsWindow() {
   }, [])
 
   const update = <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => {
-    setSettings((s) => ({ ...s, [key]: value }))
+    setSettings((s: AppSettings) => ({ ...s, [key]: value }))
   }
 
   const handleSave = async () => {
@@ -73,7 +73,7 @@ export function SettingsWindow() {
               ['Short Break', 'shortBreakDuration'],
               ['Long Break', 'longBreakDuration']
             ] as [string, keyof AppSettings][]).map(([label, key]) => (
-              <div key={key}>
+              <div key={String(key)}>
                 <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>{label}</p>
                 <input
                   type="number"
@@ -109,7 +109,7 @@ export function SettingsWindow() {
             ['Sound alerts', 'soundEnabled'],
             ['Launch at login', 'launchOnStartup']
           ] as [string, keyof AppSettings][]).map(([label, key]) => (
-            <div key={key} className={rowCls}>
+            <div key={String(key)} className={rowCls}>
               <span className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>{label}</span>
               <button
                 className={toggleCls(settings[key] as boolean)}
