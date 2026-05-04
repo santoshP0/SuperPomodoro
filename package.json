@@ -1,0 +1,37 @@
+{
+  "name": "superpomodoro",
+  "version": "1.0.0",
+  "description": "A native Pomodoro timer with full-screen break enforcement",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:win": "npm run build && electron-builder --win",
+    "build:all": "npm run build && electron-builder --win --mac",
+    "preview": "electron-vite preview",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "keywords": ["pomodoro", "productivity", "timer", "electron"],
+  "author": "SuperPomodoro",
+  "license": "MIT",
+  "dependencies": {
+    "electron-store": "^8.2.0",
+    "framer-motion": "^11.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4"
+  }
+}
