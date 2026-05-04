@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import type { TimerState } from '../types/ipc'
+import type { TimerState } from '../../types/ipc'
 
 interface ControlButtonsProps {
   state: TimerState

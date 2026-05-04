@@ -33,5 +33,6 @@ export const IPC = {
   OVERLAY_SKIP_HOVER: 'overlay:skip-hover',
   OVERLAY_SKIP_LEAVE: 'overlay:skip-leave',
   OVERLAY_SKIP: 'overlay:skip',
-  OVERLAY_COUNTDOWN: 'overlay:countdown'
+  OVERLAY_COUNTDOWN: 'overlay:countdown',
+  PLAY_SOUND: 'sound:play'
 } as const

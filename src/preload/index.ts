@@ -7,6 +7,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on(IPC.TIMER_UPDATE, (_e, snapshot) => cb(snapshot))
     return () => ipcRenderer.removeAllListeners(IPC.TIMER_UPDATE)
   },
+  onPlaySound: (cb: () => void) => {
+    ipcRenderer.on(IPC.PLAY_SOUND, () => cb())
+    return () => ipcRenderer.removeAllListeners(IPC.PLAY_SOUND)
+  },
   sendControl: (action: TimerControl) => {
     ipcRenderer.send(IPC.TIMER_CONTROL, action)
   },

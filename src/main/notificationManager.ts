@@ -1,35 +1,20 @@
-import { Notification, BrowserWindow, app } from 'electron'
-import { join } from 'path'
+import { Notification, BrowserWindow } from 'electron'
+import { IPC } from '../types/ipc'
 import type { TimerSnapshot } from '../types/ipc'
 
-let soundWindow: BrowserWindow | null = null
-
-function getSoundPath(): string {
-  return app.isPackaged
-    ? join(process.resourcesPath, 'sounds/bell.mp3')
-    : join(__dirname, '../../assets/sounds/bell.mp3')
-}
-
-function ensureSoundWindow() {
-  if (soundWindow && !soundWindow.isDestroyed()) return
-
-  soundWindow = new BrowserWindow({
-    show: false,
-    skipTaskbar: true,
-    webPreferences: { nodeIntegration: false, contextIsolation: true }
-  })
-}
-
+/**
+ * Ask the main renderer window to synthesize a bell tone via Web Audio API.
+ * This avoids the fragile hidden-BrowserWindow + executeJavaScript approach
+ * and removes the dependency on a bundled .mp3 asset.
+ */
 export function playSound() {
-  ensureSoundWindow()
-  const path = getSoundPath()
-  soundWindow!.webContents.executeJavaScript(`
-    (function() {
-      const a = new Audio(${JSON.stringify('file://' + path)});
-      a.volume = 0.8;
-      a.play().catch(() => {});
-    })()
-  `)
+  const windows = BrowserWindow.getAllWindows()
+  for (const win of windows) {
+    if (!win.isDestroyed() && win.webContents) {
+      win.webContents.send(IPC.PLAY_SOUND)
+      break
+    }
+  }
 }
 
 export function notify(snapshot: TimerSnapshot, soundEnabled: boolean) {

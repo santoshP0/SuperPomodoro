@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import type { AppSettings } from '../../types/ipc'
+import type { AppSettings } from '../../../types/ipc'
 
 const isMac = navigator.platform.toLowerCase().includes('mac')
 

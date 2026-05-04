@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { TimerSnapshot } from '../types/ipc'
+import type { TimerSnapshot } from '../../types/ipc'
 
 const DEFAULT_SNAPSHOT: TimerSnapshot = {
   state: 'IDLE',
@@ -13,9 +13,10 @@ declare global {
   interface Window {
     electronAPI: {
       onTimerUpdate: (cb: (s: TimerSnapshot) => void) => () => void
+      onPlaySound: (cb: () => void) => () => void
       sendControl: (action: 'start' | 'pause' | 'reset' | 'skip') => void
-      getSettings: () => Promise<import('../types/ipc').AppSettings>
-      saveSettings: (s: import('../types/ipc').AppSettings) => Promise<boolean>
+      getSettings: () => Promise<import('../../types/ipc').AppSettings>
+      saveSettings: (s: import('../../types/ipc').AppSettings) => Promise<boolean>
       openSettings: () => void
     }
     overlayAPI: {

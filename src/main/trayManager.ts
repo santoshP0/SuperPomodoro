@@ -1,4 +1,4 @@
-import { Tray, Menu, nativeImage, app, BrowserWindow } from 'electron'
+import { Tray, Menu, nativeImage, app } from 'electron'
 import { join } from 'path'
 import type { TimerSnapshot } from '../types/ipc'
 import { timerEngine } from './timerEngine'
@@ -68,11 +68,10 @@ export function createTray(openWindow: () => void, openSettings: () => void) {
   const snapshot = timerEngine.getSnapshot()
   const iconPath = getIconPath(snapshot.state)
 
-  let img: Electron.NativeImage
-  try {
-    img = nativeImage.createFromPath(iconPath)
-  } catch {
-    // Fallback to empty image during dev before assets exist
+  let img = nativeImage.createFromPath(iconPath)
+  // createFromPath returns an empty image (not an exception) when the file
+  // doesn't exist yet (e.g. during early dev before assets are placed).
+  if (img.isEmpty()) {
     img = nativeImage.createEmpty()
   }
 

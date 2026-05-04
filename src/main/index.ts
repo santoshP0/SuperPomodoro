@@ -19,8 +19,8 @@ app.on('second-instance', () => {
 })
 
 // Quit prevention — app lives in tray
-app.on('window-all-closed', (e: Event) => {
-  e.preventDefault()
+app.on('window-all-closed', () => {
+  // Intentionally prevent quit — app lives in the system tray
 })
 
 app.on('before-quit', () => {
@@ -50,20 +50,17 @@ app.whenReady().then(() => {
   // Wire timer events
   timerEngine.on('tick', (snapshot) => {
     broadcastTimerUpdate()
-    const s = settingsStore.get()
     updateTray(snapshot, () => createMainWindow(), () => createSettingsWindow())
   })
 
   timerEngine.on('breakStart', (snapshot) => {
-    const s = settingsStore.get()
-    notify(snapshot, s.soundEnabled)
+    notify(snapshot, settingsStore.get().soundEnabled)
     createOverlays(snapshot)
   })
 
   timerEngine.on('breakEnd', (snapshot) => {
     closeOverlays()
-    const s = settingsStore.get()
-    notify(snapshot, s.soundEnabled)
+    notify(snapshot, settingsStore.get().soundEnabled)
   })
 
   timerEngine.on('overlayTick', (remaining: number) => {

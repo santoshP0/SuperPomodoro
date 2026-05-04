@@ -23,21 +23,25 @@ const config: Configuration = {
   ],
 
   asar: true,
-  asarUnpack: ['**/*.mp3'],
+  asarUnpack: ['**/*.wav'],
 
   mac: {
     category: 'public.app-category.productivity',
-    icon: 'assets/icons/icon.icns',
+    // electron-builder auto-generates .icns from icon.png if .icns not present
+    icon: 'assets/icons/icon.png',
     target: [
       { target: 'dmg', arch: ['x64', 'arm64'] }
     ],
     hardenedRuntime: true,
     gatekeeperAssess: false,
-    darkModeSupport: true
+    darkModeSupport: true,
+    entitlements: 'resources/entitlements.mac.plist',
+    entitlementsInherit: 'resources/entitlements.mac.plist'
   },
 
   dmg: {
     title: 'SuperPomodoro',
+    icon: 'assets/icons/icon.png',
     contents: [
       { x: 130, y: 220, type: 'file' },
       { x: 410, y: 220, type: 'link', path: '/Applications' }
@@ -46,7 +50,8 @@ const config: Configuration = {
   },
 
   win: {
-    icon: 'assets/icons/icon.ico',
+    // electron-builder auto-generates .ico from icon.png if .ico not present
+    icon: 'assets/icons/icon.png',
     target: [
       { target: 'nsis', arch: ['x64'] }
     ]
@@ -59,7 +64,9 @@ const config: Configuration = {
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
     shortcutName: 'SuperPomodoro',
-    runAfterFinish: true
+    runAfterFinish: true,
+    installerIcon: 'assets/icons/icon.png',
+    uninstallerIcon: 'assets/icons/icon.png'
   },
 
   publish: null
